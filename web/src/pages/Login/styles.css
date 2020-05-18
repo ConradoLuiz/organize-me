@@ -1,0 +1,60 @@
+@media (min-width: 850px){
+    *{
+        font-weight: 300;
+    }
+    .login-page{
+        background: #E8ECFC;
+
+        width: 100%;
+        min-height: 100vh;
+    
+        display: flex;
+        
+        
+    }
+    
+    .main-text{
+    
+        width: 45%;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    
+        background: linear-gradient(135.51deg, #466CF2 1.29%, #A170F2 99.47%);
+    }
+
+    .title{
+        display: flex;
+        align-items: center;
+
+        margin: 0 0 3em 0;
+    }
+    
+    .title .logo{
+        width: 25%;
+        padding: 2em;
+    }
+
+    .title h1{
+        font-size: 3em;
+        color: #fff;
+    }
+
+    .slogan{
+        padding: 2em;
+        font-size: 1.4em;
+        color: #fff;
+    }
+
+    .slogan h3{
+        font-size: 1em;
+    }
+
+    .login-container{
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
