@@ -63,6 +63,8 @@ module.exports = {
 
 
         } catch(erro){
+            console.log('login try catch error', erro);
+            
             const err = new Error("Connection error. Try again later.");
             res.status(503);
             return next(err);
@@ -108,6 +110,8 @@ module.exports = {
                 })
             })
             .catch(error => {
+                console.log('insert user error:',error);
+                
                 const err = new Error('Not able to insert user.')
                 res.status(503);
                 return next(err);
@@ -115,6 +119,7 @@ module.exports = {
 
         
         }catch(error){
+            console.log('create try catch error:', error);
             
             const err = new Error("Connection error. Try again later.");
             res.status(503);
