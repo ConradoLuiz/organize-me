@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom';
 import styles from './styles.css';
 
 
@@ -20,7 +21,7 @@ export default function LoginForm () {
     return (
         <div className='form-container'>
             
-            <form className='login-form'>
+            <form className='login-form' onSubmit={(e) => handleLogin(e)}>
                 <input 
                 type="text" 
                 placeholder='Usuário'
@@ -35,14 +36,13 @@ export default function LoginForm () {
                 />
 
                 <span>Ainda não tem uma conta?</span>
-                <a href="/signup">Cadastre-se</a>
+                <Link to="/signup">Cadastre-se</Link>
 
                 <input 
                 type="submit" 
                 className='btn-login' 
                 value={!isLoggingIn ? 'Login' : '...'}  
                 disabled={isLoggingIn ? true : false}  
-                onClick={(e) => handleLogin(e)}
                 
                 />
             </form>

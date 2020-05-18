@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
+import api from '../services/api';
 
 
 const initialState = {
@@ -18,10 +19,18 @@ export const GlobalProvider = ({ children }) => {
         
         dispatch({type: 'ATTEMPT_LOGIN'});
 
-        setTimeout(() => {
+        try{
+            // const response = api.post('auth/login', {
+            //     username,
+            //     password
+            // });
+
+
+        } catch(error){
+            console.log(error);
             dispatch({type: 'FAILED_LOGIN'});
-        }, 700);
- 
+        }
+
     }
 
     return (
