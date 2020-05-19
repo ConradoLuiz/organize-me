@@ -46,7 +46,7 @@ export const GlobalProvider = ({ children }) => {
             history.push('/notes');
 
         } catch(error){
-            console.log(error.response);
+            
             dispatch({type: 'FAILED_LOGIN'});
         }
 
@@ -84,10 +84,7 @@ export const GlobalProvider = ({ children }) => {
 
         } catch(error){
 
-            console.log(error.response);
-            console.log(error.response.data.message);
-            
-            let error_message = '';
+            let error_message = error.response.data.message;
 
             if(error.response.data.message.includes('password')){
                 error_message = 'A senha deve ter pelo menos 10 caracteres'
@@ -96,6 +93,7 @@ export const GlobalProvider = ({ children }) => {
             if(error.response.data.message.includes('Username')){
                 error_message = 'Esse nome de usuário não está disponível'
             }
+
 
             dispatch({
                 type: 'FAILED_SIGNUP',
