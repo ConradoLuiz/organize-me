@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styles from './styles.css';
 
 
@@ -9,19 +9,21 @@ export default function LoginForm () {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const history = useHistory();
 
-    const { isLoggingIn, loginAction } = useContext(GlobalContext);
+    const { isLoggingIn, loginAction, hasLoginError } = useContext(GlobalContext);
     
     function handleLogin(e) {
         e.preventDefault();
         
-        loginAction(username, password);
+        loginAction(history, username, password);
     }
 
     return (
         <div className='form-container'>
             
             <form className='login-form' onSubmit={(e) => handleLogin(e)}>
+                {hasLoginError ? <h3 className='login-error-message'>Login inválido</h3>: null} 
                 <input 
                 type="text" 
                 placeholder='Usuário'

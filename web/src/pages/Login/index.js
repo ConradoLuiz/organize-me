@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.css';
 import logo from '../../assets/logo.svg';
 import LoginForm from '../../components/LoginForm';
 
 export default function Login() {
+
+    useEffect(() => {
+        localStorage.clear();
+
+    }, [])
     return (
         <div className='login-page'>
             <div className="main-text">

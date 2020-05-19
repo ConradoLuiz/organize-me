@@ -7,7 +7,7 @@
     padding: 1%;
 }
 
-.login-form{
+.signup-form{
     width: 100%;
     height: 100%;
     display: flex;
@@ -16,56 +16,66 @@
     align-items: center;
 }
 
-.login-form input{
+.signup-form input{
     border-radius: 10px;
     border-color: rgb(85, 85, 85);
     border-width: 1px;
     border-style: solid;
     font-size: 1.2em;
     width: 60%;
-    margin: 1.7em 0 0 0;
+    margin: 1.3em 0 0 0;
     padding: 15px 20px;
 }
 
-.login-form span{
+.signup-form span{
     
     align-self: start;
     margin: 2em 0 0 15%;
 }
 
-.login-form a{
+.signup-form a{
     margin: 0 0 0 15%;
     align-self: start;
 
     text-decoration: none;
 }
 
-.login-form a:hover{
+.signup-form a:hover{
     color: #000;
     text-decoration: underline;
 }
 
-.login-form .btn-login{
+.signup-form .btn-signup{
     border: none;
     background: #C4A2FC;
     color: #000;
     transition: opacity 0.2s;
 }
 
-.login-form .btn-login:hover{
+.signup-form .btn-signup:hover{
     filter: brightness(0.9);
 }
 
-.login-form .login-error-message{
-    padding: 10px 0 0 0;
+.signup-form .signup-error-message{
+    padding: 5px 0;
+    margin: 0;
     color: red;
 }
 
 @media (max-width: 850px){
     .form-container{
         min-width: 300px;
-        min-height: 400px;
+        min-height: unset;
+        padding: 1em 0;
         
     }
+
+    .signup-form input{
+        border-radius: 5px;
+        font-size: 1.1em;
+        width: 60%;
+        padding: 6px 15px;
+    }
+    
     
 }

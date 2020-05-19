@@ -1,0 +1,36 @@
+.signup-page{
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: linear-gradient(135.51deg, #466CF2 1.29%, #A170F2 99.47%);
+}
+
+.signup-page header{
+    margin: 2em 0 4em 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.signup-page header img{
+    width: 15%;
+    padding: 1em;
+}
+.signup-page header h1{
+    font-size: 3em;
+}
+
+@media (max-width: 850px){
+    .signup-page header img{
+        width: 4em;
+        padding: 1em;
+    }
+    .signup-page header h1{
+        font-size: 2em;
+    }
+}
