@@ -1,4 +1,4 @@
-const db = require('../db');
+const { db, admin } = require('../db');
 const UserValidation = require('../Validation/UserValidation');
 const AuthController = require('./AuthController');
 const Joi = require('joi');
@@ -49,7 +49,8 @@ module.exports = {
 
                 const token = AuthController.createUserToken({
                     username: user.username,
-                    name: user.name
+                    name: user.name,
+                    id: doc.id
                 });
 
                 res.status(200);
@@ -96,11 +97,16 @@ module.exports = {
             const newUser = {
                 username,
                 name,
-                password: hashedPassword
+                password: hashedPassword,
+                created_at: admin.firestore.FieldValue.serverTimestamp(),
             }
 
             db.collection('users').add(newUser).then(ref => {
-                const token = AuthController.createUserToken({username, name});
+                const token = AuthController.createUserToken({
+                    id: ref.id,
+                    username, 
+                    name
+                });
                 
                 res.status(201);
                 return res.json({
