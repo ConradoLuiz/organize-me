@@ -4,8 +4,35 @@
 } */
 
 .note{
-    padding: 10px;
+    padding: 5px 0 0 0;
     margin: 10px 0;
     border-radius: 10px;
     background: #F0F7FD;
+
+    border: Solid 1px #370588;
+}
+
+.note .note-title, .note-description,.note-created{
+    /* padding: 0 10px; */
+    margin: 5px 10px;
+}
+
+.note .note-description{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.note .buttons{
+    display: flex;
+}
+
+.note .buttons .note-delete{
+    flex: 1;
+    border: solid 1px #370588;
+}
+
+.note .buttons .note-complete{
+    flex: 6;
+    border: solid 1px #370588;
 }

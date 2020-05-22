@@ -49,7 +49,7 @@
     border: none;
     background: #C4A2FC;
     color: #000;
-    transition: opacity 0.2s;
+    transition: filter 0.2s;
 }
 
 .login-form .btn-login:hover{

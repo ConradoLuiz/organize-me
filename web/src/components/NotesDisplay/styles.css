@@ -29,3 +29,27 @@
     font-weight: 400;
 }
 
+.notes-display .add-note{
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.notes-display .add-note p{
+    font-size: 0.9em;
+}
+.notes-display .add-note svg{
+    transition: filter 0.2s;
+}
+.notes-display .add-note svg:hover{
+    filter: brightness(2.3);
+}
+
+.notes-display .notes-container{
+    padding: 5px 10px;
+    overflow-y: auto;
+    
+    z-index: 1;
+
+    border-radius: 0 0 0 2em;
+}
