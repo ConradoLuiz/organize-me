@@ -1,0 +1,11 @@
+/* .note{
+    padding: 0;
+    margin: 0;
+} */
+
+.note{
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background: #F0F7FD;
+}

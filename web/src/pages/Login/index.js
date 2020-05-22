@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './styles.css';
 import logo from '../../assets/logo.svg';
 import LoginForm from '../../components/LoginForm';
 
+import { GlobalContext } from '../../context/GlobalState';
+
 export default function Login() {
+    const history = useHistory();
+    
+    const { isLoggedIn } = useContext(GlobalContext);
 
     useEffect(() => {
         localStorage.clear();
 
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(isLoggedIn){
+            history.push('/notes');
+        }
+
+    }, [isLoggedIn]);
+    
     return (
         <div className='login-page'>
             <div className="main-text">

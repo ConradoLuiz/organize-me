@@ -16,7 +16,7 @@ export default function LoginForm () {
     function handleLogin(e) {
         e.preventDefault();
         
-        loginAction(history, username, password);
+        loginAction( username, password );
     }
 
     return (

@@ -16,6 +16,7 @@ export default (state, action) => {
             return{
                 ...state,
                 user: action.payload.user,
+                isLoggedIn: true,
                 isLoggingIn: false,
                 isSigningUp: false,
             }

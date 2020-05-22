@@ -1,0 +1,32 @@
+.notes-list > *{
+    margin: 0;
+    padding: 0;
+}
+
+.notes-list{
+    /* height: 70%; */
+}
+
+.notes-list .add-note{
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.notes-list .add-note p{
+    font-size: 0.9em;
+}
+.notes-list .add-note svg{
+    transition: filter 0.2s;
+}
+.notes-list .add-note svg:hover{
+    filter: brightness(2.3);
+}
+
+.notes-list .notes-container{
+    padding: 5px 6px;
+    overflow-y: auto;
+    
+    height: 100%;
+    z-index: 1;
+}

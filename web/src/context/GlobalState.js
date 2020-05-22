@@ -6,6 +6,7 @@ import api from '../services/api';
 
 
 const initialState = {
+    isLoggedIn: false,
     user: {},
     isLoggingIn: false,
     hasLoginError: false,
@@ -20,7 +21,7 @@ export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
 
-    async function loginAction(history, username, password) {
+    async function loginAction( username, password ) {
         
         dispatch({type: 'ATTEMPT_LOGIN'});
 
@@ -43,7 +44,7 @@ export const GlobalProvider = ({ children }) => {
                 payload: user
             })
 
-            history.push('/notes');
+            // history.push('/notes');
 
         } catch(error){
             
@@ -108,6 +109,7 @@ export const GlobalProvider = ({ children }) => {
             dispatch,
             notes: state.notes,
             user: state.user,
+            isLoggedIn: state.isLoggedIn,
             isLoggingIn: state.isLoggingIn,
             hasLoginError: state.hasLoginError,
             loginAction,
