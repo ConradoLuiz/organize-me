@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 // import NotesList from '../NotesList';
 import logo from '../../assets/logo.svg';
 import styles from './styles.css';
 
 import { FiPlusCircle } from 'react-icons/fi';
 
+import CreateNoteModal from '../CreateNoteModal';
 import Note from '../Note';
 
+import { GlobalContext } from '../../context/GlobalState';
+
 export default function NotesDisplay() {
+    const { openCreateNote } = useContext(GlobalContext);
+
     return (
         <div className='notes-display'>
             <header>
@@ -21,9 +26,9 @@ export default function NotesDisplay() {
 
             
             <div className="add-note">
-                <p>Selecione uma tarefa ou crie uma nova</p>
+                <p>Selecione uma nota ou crie uma nova</p>
 
-                <FiPlusCircle size={24} color='#370588' />
+                <FiPlusCircle size={24} color='#370588' onClick={openCreateNote} />
             </div>
 
             <div className="notes-container">
@@ -40,7 +45,9 @@ export default function NotesDisplay() {
                 <Note title={'Im a note'} description={'Simple description of a note'} created_at={'21/05/2020 às 19:43h'}/>
                 
             </div>
-        
+
+            {/* MODAL TO CREATE NEW NOTE */}
+            <CreateNoteModal />
         </div>
     )
 }

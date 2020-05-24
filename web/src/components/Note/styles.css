@@ -27,12 +27,28 @@
     display: flex;
 }
 
+.note .buttons .note-delete, .note-complete{
+    background: none;
+    padding: 5px 0 0 0;
+    border: solid #370588;
+    transition: background 0.1s;
+}
+
 .note .buttons .note-delete{
     flex: 1;
-    border: solid 1px #370588;
+    border-radius: 0 0 0 10px;
+    border-width: 1px 0 0 0;
+}
+
+.note .buttons .note-delete:hover{
+    background: #EB8B8B;
 }
 
 .note .buttons .note-complete{
     flex: 6;
-    border: solid 1px #370588;
+    border-radius: 0 0 10px 0;
+    border-width: 1px 0 0 1px;
+}
+.note .buttons .note-complete:hover{
+    background: #8BEFAD;
 }

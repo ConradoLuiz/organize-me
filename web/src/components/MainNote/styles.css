@@ -1,4 +1,77 @@
-*{
+.main-note > *{
     margin: 0;
     padding: 0;
+}
+
+.main-note{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-note .main-note-header{
+    margin: 30px 10px 10px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    
+}
+.main-note .main-note-header h2{
+    font-size: 2em;
+}
+.main-note .main-note-header span{
+    font-size: 0.9em;
+}
+
+.main-note .main-note-header .more-menu{
+    margin: 20px 10px 0 0;
+    transition: filter 0.2s;
+}
+.main-note .main-note-header .more-menu:hover{
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.main-editor-wrapper{
+    margin: 0px 0 0 5px;
+    overflow: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 0 0 2em 0;
+}
+
+.main-editor-toolbar{
+    /* position: fixed;
+    width: 54%; */
+}
+.main-editor{
+    background-color: whitesmoke;
+    padding: 0 0 0 5px;
+    margin: 0 0 0 5px;
+    overflow: auto;
+}
+
+.create-note{
+    text-align: center; 
+}
+
+.create-note h2{
+    margin: 0 0 15px 0;
+}
+
+.create-note button{
+    background-color: #dadada;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    height: 50px;
+    text-align: center;
 }

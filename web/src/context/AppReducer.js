@@ -10,7 +10,8 @@ export default (state, action) => {
         case 'ATTEMPT_LOGIN':
             return {
                 ...state,
-                isLoggingIn: true
+                isLoggingIn: true,
+                hasLoginError: false
             }
         case 'LOGIN':
             return{
@@ -50,6 +51,17 @@ export default (state, action) => {
                 user: {},
                 isSigningUp: false,
                 signupError: null
+            }
+        
+        case 'OPEN_MODAL':
+            return {
+                ...state,
+                isModalOpen: true
+            }
+        case 'CLOSE_MODAL':
+            return {
+                ...state,
+                isModalOpen: false
             }
         default:
             return state;

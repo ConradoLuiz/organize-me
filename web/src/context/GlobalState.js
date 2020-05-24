@@ -1,5 +1,4 @@
 import React, { createContext, useReducer } from 'react';
-    import { useHistory } from 'react-router-dom'
 
 import AppReducer from './AppReducer';
 import api from '../services/api';
@@ -12,7 +11,8 @@ const initialState = {
     hasLoginError: false,
     isSigningUp: false,
     signupError: null,
-    notes: []
+    notes: [],
+    isModalOpen: false
 }
 
 export const GlobalContext = createContext(initialState);
@@ -104,6 +104,10 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    function openCreateNote() { dispatch({ type: 'OPEN_MODAL' }) }
+
+    function closeCreateNote() { dispatch({ type: 'CLOSE_MODAL' }) }
+
     return (
         <GlobalContext.Provider value={{
             dispatch,
@@ -115,7 +119,10 @@ export const GlobalProvider = ({ children }) => {
             loginAction,
             isSigningUp: state.isSigningUp,
             signupError: state.signupError,
-            signupAction
+            signupAction,
+            isModalOpen: state.isModalOpen,
+            openCreateNote,
+            closeCreateNote
         }}>
             {children}
         </GlobalContext.Provider>
