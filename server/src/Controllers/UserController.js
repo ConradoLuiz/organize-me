@@ -57,6 +57,7 @@ module.exports = {
                 return res.json({
                     id: doc.id,
                     username,
+                    name: user.name,
                     token
                 });
 
@@ -112,6 +113,7 @@ module.exports = {
                 return res.json({
                     id: ref.id,
                     username,
+                    name,
                     token
                 })
             })

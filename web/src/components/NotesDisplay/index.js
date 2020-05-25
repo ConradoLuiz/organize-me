@@ -11,8 +11,9 @@ import Note from '../Note';
 import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
-    const { openCreateNote } = useContext(GlobalContext);
-
+    const { openCreateNote, notes, setMainNote, user } = useContext(GlobalContext);
+    console.log(user);
+    
     return (
         <div className='notes-display'>
             <header>
@@ -21,7 +22,7 @@ export default function NotesDisplay() {
                     <h1>Organize-me</h1>
                 </div>
 
-                <h2>Olá, Conrado</h2>
+                <h2>Olá, { user.name.split(' ')[0] }</h2>
             </header>
 
             
@@ -32,22 +33,27 @@ export default function NotesDisplay() {
             </div>
 
             <div className="notes-container">
-                <Note title={'Im a note'} description={'Simple description of a note'} created_at={'21/05/2020 às 19:43h'}/>
+                { notes.map((note) =>{
+                    
+                    
+                    return (
+                        <Note 
+                            key={note.id} 
+                            id={note.id}
+                            title={note.title} 
+                            content={note.content} 
+                            text_content={note.text_content}
+                            created_at={note.created_at} 
+                            updated_at={note.updated_at} 
 
-                <Note 
-                    title={'Im a note'} 
-                    description={'Simple description of a note, but these can get very complex, very quickly and they grow'} 
-                    created_at={'21/05/2020 às 19:43h'}
-                />
-                <Note title={'Im a note'} description={''} created_at={'21/05/2020 às 19:43h'}/>
-                <Note title={'Im a note'} description={'Simple description of a note'} created_at={'21/05/2020 às 19:43h'}/>
-                <Note title={'Im a note'} description={'Simple description of a note'} created_at={'21/05/2020 às 19:43h'}/>
-                <Note title={'Im a note'} description={'Simple description of a note'} created_at={'21/05/2020 às 19:43h'}/>
-                
+                            object={note}
+                        />
+                    )
+                })}
+
             </div>
 
-            {/* MODAL TO CREATE NEW NOTE */}
-            <CreateNoteModal />
+
         </div>
     )
 }

@@ -37,7 +37,7 @@ export default function CreateNoteModal() {
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(false)
 
-  const { isModalOpen, openCreateNote, closeCreateNote } = useContext(GlobalContext);
+  const { isModalOpen, openCreateNote, closeCreateNote, createNoteAction, isCreatingNote } = useContext(GlobalContext);
 
   
   function handleCriarNota(e) {
@@ -46,6 +46,8 @@ export default function CreateNoteModal() {
         return setTitleError(true);
     }
     setTitleError(false);
+
+    createNoteAction(title);
   }
 
   function handleOnClose() {
@@ -93,6 +95,7 @@ export default function CreateNoteModal() {
                   type='submit'
                   color="primary" 
                   className={classes.button} 
+                  disabled={isCreatingNote ? true : false}
               >
                   Criar nota
               </Button>

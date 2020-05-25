@@ -1,5 +1,19 @@
 export default (state, action) => {
     switch (action.type) {
+        case 'RESET_GLOBAL_CACHED_STATE':
+            return {
+                ...state,
+                ...action.payload,
+                isLoggedIn: false
+            }
+        case 'SET_USER':
+            return{
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.payload
+                }
+            }
         case 'RESET_LOGIN':
             return {
                 ...state,
@@ -16,7 +30,7 @@ export default (state, action) => {
         case 'LOGIN':
             return{
                 ...state,
-                user: action.payload.user,
+                user: action.payload,
                 isLoggedIn: true,
                 isLoggingIn: false,
                 isSigningUp: false,
@@ -27,7 +41,8 @@ export default (state, action) => {
                 ...state,
                 user: {},
                 isLoggingIn: false,
-                hasLoginError: true
+                hasLoginError: true,
+                isLoggedIn: false
             }
 
         case 'ATTEMPT_SIGNUP':
@@ -62,6 +77,43 @@ export default (state, action) => {
             return {
                 ...state,
                 isModalOpen: false
+            }
+        
+        case 'ATTEMPT_CREATE_NOTE':
+            return {
+                ...state,
+                isCreatingNote: true
+            }
+
+        case 'CREATE_NOTE':
+            return {
+                ...state,
+                isCreatingNote: false,
+                notes: [action.payload , ...state.notes]
+            }
+        
+        case 'LOADING_NOTES':
+            return {
+                ...state,
+                isLoadingNotes: true
+            }
+        
+        case 'LOADED_NOTES':
+            return {
+                ...state,
+                isLoadingNotes: false,
+                notes: action.payload
+            }
+        
+        case 'DELETE_NOTE':
+            return{
+                ...state,
+                notes: state.notes.filter(note => note.id != action.payload)
+            }
+        case 'SET_MAIN_NOTE':
+            return{
+                ...state,
+                mainNote: action.payload
             }
         default:
             return state;

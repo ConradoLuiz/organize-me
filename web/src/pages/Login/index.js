@@ -9,12 +9,7 @@ import { GlobalContext } from '../../context/GlobalState';
 export default function Login() {
     const history = useHistory();
     
-    const { isLoggedIn } = useContext(GlobalContext);
-
-    useEffect(() => {
-        localStorage.clear();
-
-    }, []);
+    const { isLoggedIn, resetCachedState } = useContext(GlobalContext);
 
     useEffect(() => {
         if(isLoggedIn){
@@ -22,6 +17,7 @@ export default function Login() {
         }
 
     }, [isLoggedIn]);
+
     
     return (
         <div className='login-page'>

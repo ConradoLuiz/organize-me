@@ -18,20 +18,18 @@ module.exports = {
         return token;
     },
 
-    verifyUserToken(token, username, id){
+    verifyUserToken(req, res, next){
 
         try {
-            const decode = jwt.verify(token, process.env.TOKEN_SECRET);
+            const decoded = jwt.verify(req.params.token, process.env.TOKEN_SECRET);
 
-            if (decode.username != username || decode.id != id ){
-                throw new Error('Invalid token');
-            }
-            
-            return {user: decode};
+            res.status(200);
+            return res.json({user: decoded});
 
         } catch (error) {
 
-            return {error};
+            res.status(401);
+            return res.send();
         }
         
     },

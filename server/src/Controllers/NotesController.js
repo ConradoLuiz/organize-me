@@ -39,8 +39,8 @@ module.exports = {
                 content: '',
                 text_content: '',
                 is_completed: false,
-                updated_at: admin.firestore.FieldValue.serverTimestamp(), 
-                created_at: admin.firestore.FieldValue.serverTimestamp()
+                updated_at: admin.firestore.Timestamp.fromDate(new Date()), 
+                created_at: admin.firestore.Timestamp.fromDate(new Date())
             }
 
             
@@ -49,7 +49,8 @@ module.exports = {
                  
                 res.status(201);
                 return res.json({
-                    id: ref.id
+                    id: ref.id,
+                    ...newNote
                 })
             })
 
@@ -73,7 +74,7 @@ module.exports = {
                 text_content,
                 content,
                 is_completed,
-                updated_at: admin.firestore.FieldValue.serverTimestamp()
+                updated_at: admin.firestore.Timestamp.fromDate(new Date())
             }
 
             db.collection('users').doc(user.id).collection('notes').doc(id).set(updatedNote, {merge: true});
@@ -81,6 +82,31 @@ module.exports = {
             res.status(200);
             return res.json({
                 status: 'Updated'
+            });
+
+        } catch(error){
+            console.log('update note try catch error', error);
+            
+            const err = new Error("Connection error. Try again later.");
+            res.status(503);
+            return next(err);
+        }
+
+        
+    },
+
+    async delete(req, res, next){
+        
+        const { id } = req.body;
+        const user = req.user;
+
+        try{
+
+            db.collection('users').doc(user.id).collection('notes').doc(id).delete();
+
+            res.status(200);
+            return res.json({
+                status: 'Deleted'
             });
 
         } catch(error){

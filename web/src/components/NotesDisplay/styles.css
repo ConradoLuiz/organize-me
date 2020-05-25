@@ -35,6 +35,9 @@
     color: #340B77;
     font-weight: 400;
 }
+.notes-display .header-top h2{
+    text-transform: capitalize;
+}
 
 .notes-display .add-note{
     padding: 5px 10px;

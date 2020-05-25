@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 
 import AppReducer from './AppReducer';
 import api from '../services/api';
@@ -12,14 +12,46 @@ const initialState = {
     isSigningUp: false,
     signupError: null,
     notes: [],
-    isModalOpen: false
+    isModalOpen: false,
+    isCreatingNote: false,
+    isLoadingNotes: false,
+    mainNote: null
 }
 
 export const GlobalContext = createContext(initialState);
 
-export const GlobalProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(AppReducer, initialState);
+const localState = JSON.parse(localStorage.getItem('context'));
 
+
+export const GlobalProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(AppReducer, localState || initialState);
+
+    useEffect(() => {
+        localStorage.setItem('context', JSON.stringify(state));
+    }, [state]);
+
+    function resetCachedState() {
+        dispatch({
+            type: 'RESET_GLOBAL_CACHED_STATE',
+            payload: initialState
+        })
+        
+    }
+
+    function openCreateNote() { dispatch({ type: 'OPEN_MODAL' }) }
+
+    function closeCreateNote() { dispatch({ type: 'CLOSE_MODAL' }) }
+
+    function setUser(user) {
+        dispatch({
+            type: 'SET_USER',
+            payload: user
+        })
+    }
+
+    function checkLoginStatus() {
+        return state.isLoggedIn;
+    }
 
     async function loginAction( username, password ) {
         
@@ -33,6 +65,7 @@ export const GlobalProvider = ({ children }) => {
 
             const user = {
                 username: response.data.username,
+                name: response.data.name,
                 id: response.data.id,
                 token: response.data.token
             }
@@ -44,7 +77,7 @@ export const GlobalProvider = ({ children }) => {
                 payload: user
             })
 
-            // history.push('/notes');
+            
 
         } catch(error){
             
@@ -53,7 +86,7 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
-    async function signupAction(history, username, name, password) {
+    async function signupAction(username, name, password) {
 
         dispatch({type: 'ATTEMPT_SIGNUP'});
 
@@ -76,13 +109,8 @@ export const GlobalProvider = ({ children }) => {
             });
 
             localStorage.setItem('JWT', response.data.token);
-
-            setTimeout(() => {
-                return
-            }, 2000)
             
-            history.push('/notes');
-
+            
         } catch(error){
 
             let error_message = error.response.data.message;
@@ -104,15 +132,108 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    function openCreateNote() { dispatch({ type: 'OPEN_MODAL' }) }
+    async function createNoteAction(title) {
+        dispatch({ type: 'ATTEMPT_CREATE_NOTE'});
+        try {
+            const data = { title };
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                }
+            }
+            const response = await api.post('notes/new', data, config);
+            
+            dispatch({
+                type: 'CREATE_NOTE',
+                payload: response.data
+            });
+            
+        } catch (error) {
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+            
+        } finally{
+            closeCreateNote();
+        } 
+    }
 
-    function closeCreateNote() { dispatch({ type: 'CLOSE_MODAL' }) }
+    async function loadNotes() {
+        dispatch({type: 'LOADING_NOTES'});
+
+        try {
+            
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                }
+            }
+            const response = await api.get('notes/', config);
+            
+            dispatch({
+                type: 'LOADED_NOTES',
+                payload: response.data.notes
+            });
+            
+        } catch (error) {
+            console.log(error.response);
+            
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+            
+        }
+    }
+    
+    async function deleteNoteAction(id) {
+        try {
+            const data = { id };
+            
+            await api.delete('notes', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                },
+                data
+            });
+
+            dispatch({
+                type: 'DELETE_NOTE',
+                payload: id
+            });
+
+        } catch (error) {
+            
+            console.log(error.response);
+            
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+            
+            if(error.response.status == 503){
+                dispatch({type: 'FAILED_DELETE_NOTE'});
+            }
+            
+            
+        }
+    }
+
+    function setMainNote(note) {
+        
+        
+        dispatch({
+            type: 'SET_MAIN_NOTE',
+            payload: note
+        });
+    }
 
     return (
         <GlobalContext.Provider value={{
             dispatch,
+            resetCachedState,
             notes: state.notes,
             user: state.user,
+            setUser,
+            checkLoginStatus,
             isLoggedIn: state.isLoggedIn,
             isLoggingIn: state.isLoggingIn,
             hasLoginError: state.hasLoginError,
@@ -122,7 +243,14 @@ export const GlobalProvider = ({ children }) => {
             signupAction,
             isModalOpen: state.isModalOpen,
             openCreateNote,
-            closeCreateNote
+            closeCreateNote,
+            createNoteAction,
+            isCreatingNote: state.isCreatingNote,
+            isLoadingNotes: state.isLoadingNotes,
+            loadNotes,
+            deleteNoteAction,
+            mainNote: state.mainNote,
+            setMainNote
         }}>
             {children}
         </GlobalContext.Provider>
