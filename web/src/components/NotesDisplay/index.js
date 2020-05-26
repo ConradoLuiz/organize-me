@@ -12,7 +12,7 @@ import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
     const { openCreateNote, notes, setMainNote, user } = useContext(GlobalContext);
-    console.log(user);
+    
     
     return (
         <div className='notes-display'>

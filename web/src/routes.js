@@ -8,48 +8,47 @@ import Signup from './pages/Signup';
 import Notes from './pages/Notes';
 
 import { GlobalContext } from './context/GlobalState';
+import { useEffect } from 'react';
+
+function PrivateRoute({component: RouteComponent, ...rest}) {   
+    const { isLoggedIn, dispatch, setUser } = useContext(GlobalContext);
+
+    useEffect(() => {
+        const token = localStorage.getItem('JWT');
+        const checkAuth = async () => {
+            try {
+                const response = await api.get(`auth/verify/${token}`);
+                setUser(response.data.user);
+            } catch (error) {
+                dispatch({ type: 'FAILED_LOGIN' });
+            }
+        }
+
+        checkAuth();
+    }, []);
+    
+    return (
+        <Route
+            {...rest}
+            render={routerProps => 
+                isLoggedIn ?
+                    <RouteComponent {...routerProps} />
+                :
+                    <Redirect to={'/'} />
+
+            }
+        />
+    );
+}
 
 export default function Router() {
 
-    const { user, setUser, checkLoginStatus } = useContext(GlobalContext);
-
-    const AuthRoute = (props) => {
-        // let token = localStorage.getItem('JWT');
-        
-        // return api.get(`/auth/verify/${token}`)
-        // .then(response => {
-        //     console.log(response.data.user);
-            
-        //     setUser(response.data.user);
-        //     return (<Route {...props} />)
-        // })
-        // .catch(err => {
-
-        //     setUser(null);
-        //     return <Redirect {...props} to={props.fallback}/>
-        // });
-        
-        
-        if(checkLoginStatus()){
-            return(
-                <Route {...props}/>
-            )
-        }
-
-        return (
-            <Redirect {...props} to={props.fallback} />
-        )
-
-
-    };
-
-    
     return (
         <BrowserRouter>
             <Switch>
                 <Route path='/' exact component={Login}/>
                 <Route path='/signup' component={Signup}/>
-                <Route path='/notes' component={Notes} />
+                <PrivateRoute path='/notes' component={Notes} />
                 <Redirect to='/'/>
             </Switch>
         </BrowserRouter>

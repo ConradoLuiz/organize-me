@@ -1,25 +1,32 @@
 import React, { useContext } from 'react';
 import Moment from 'moment';
+import 'moment/locale/pt-br';
 import { FiTrash, FiCheck } from 'react-icons/fi';
 import styles from './styles.css';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-export default function Note({ id, title, content, text_content, created_at, updated_at, object}) {
+export default function Note({ id, title, content, text_content, created_at, updated_at, object: noteObject}) {
     
     const { deleteNoteAction, setMainNote } = useContext(GlobalContext);
 
-    Moment.locale();
+    Moment.locale('pt-br');
     const created_at_date = Moment.unix(created_at._seconds);
     const updated_at_date = Moment.unix(updated_at._seconds);
     
-    function handleDelete() {
+    function handleDelete(e) {
+        e.stopPropagation();
         
         deleteNoteAction(id);
     }
 
+    function handleClick(e) {
+        
+        setMainNote(noteObject);
+    }
+
     return (
-        <div className='note' onClick={() => setMainNote(object)}>
+        <div className='note' onClick={(e) => handleClick(e)}>
             <h4 className='note-title'>
                 <strong>
                     { title }
@@ -30,7 +37,7 @@ export default function Note({ id, title, content, text_content, created_at, upd
             <h6 className='note-created'>Atualizada em { updated_at_date.format('LLL') }</h6>
 
             <div className="buttons">
-                <button className='note-delete' onClick={handleDelete}>
+                <button className='note-delete' onClick={e => handleDelete(e)}>
                     <FiTrash size={18} />
                 </button>
                 <button className='note-complete'>

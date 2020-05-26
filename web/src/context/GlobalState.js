@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useEffect } from 'react';
 
 import AppReducer from './AppReducer';
 import api from '../services/api';
-
+import draftToText from '../utils/draft-to-text';
 
 const initialState = {
     isLoggedIn: false,
@@ -132,6 +132,11 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    function logoutAction() {
+        resetCachedState();
+        localStorage.clear();
+    }
+
     async function createNoteAction(title) {
         dispatch({ type: 'ATTEMPT_CREATE_NOTE'});
         try {
@@ -176,8 +181,7 @@ export const GlobalProvider = ({ children }) => {
             });
             
         } catch (error) {
-            console.log(error.response);
-            
+
             if(error.response.status == 401){
                 dispatch({type: 'FAILED_LOGIN'});
             }
@@ -203,8 +207,6 @@ export const GlobalProvider = ({ children }) => {
 
         } catch (error) {
             
-            console.log(error.response);
-            
             if(error.response.status == 401){
                 dispatch({type: 'FAILED_LOGIN'});
             }
@@ -226,6 +228,72 @@ export const GlobalProvider = ({ children }) => {
         });
     }
 
+    async function saveNoteChangeState(note, editorState) {
+        const text_content = draftToText(editorState);
+        
+        const newNote = {
+            ...note,
+            content: JSON.stringify(editorState),
+            text_content
+        }
+        
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                }
+            }
+
+            await api.post('notes/save', newNote, config);
+            dispatch({
+                type: 'UPDATE_NOTE',
+                payload: newNote
+            });
+            dispatch({
+                type: 'SET_MAIN_NOTE',
+                payload: newNote
+            });
+
+        } catch (error) {
+            
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+        }
+
+    }
+
+    async function saveNote(note, editorState) {
+        const text_content = draftToText(editorState);
+        
+        const newNote = {
+            ...note,
+            content: JSON.stringify(editorState),
+            text_content
+        }
+        
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                }
+            }
+
+            await api.post('notes/save', newNote, config);
+            dispatch({
+                type: 'SAVE_NOTE',
+                payload: newNote
+            });
+
+        } catch (error) {
+            
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+        }
+
+    }
+
     return (
         <GlobalContext.Provider value={{
             dispatch,
@@ -234,6 +302,7 @@ export const GlobalProvider = ({ children }) => {
             user: state.user,
             setUser,
             checkLoginStatus,
+            logoutAction,
             isLoggedIn: state.isLoggedIn,
             isLoggingIn: state.isLoggingIn,
             hasLoginError: state.hasLoginError,
@@ -250,7 +319,8 @@ export const GlobalProvider = ({ children }) => {
             loadNotes,
             deleteNoteAction,
             mainNote: state.mainNote,
-            setMainNote
+            setMainNote,
+            saveNote
         }}>
             {children}
         </GlobalContext.Provider>

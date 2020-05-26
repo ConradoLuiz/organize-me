@@ -4,7 +4,8 @@ export default (state, action) => {
             return {
                 ...state,
                 ...action.payload,
-                isLoggedIn: false
+                isLoggedIn: false,
+                user: {}
             }
         case 'SET_USER':
             return{
@@ -114,6 +115,18 @@ export default (state, action) => {
             return{
                 ...state,
                 mainNote: action.payload
+            }
+
+        case 'UPDATE_NOTE':
+            return {
+                ...state,
+                notes: [ action.payload , ...state.notes.filter(note => note.id != action.payload.id) ]
+            }
+
+        case 'SAVE_NOTE':
+            return {
+                ...state,
+                notes: [ ...state.notes.map(note => (note.id == action.payload.id) ? action.payload : note) ]
             }
         default:
             return state;
