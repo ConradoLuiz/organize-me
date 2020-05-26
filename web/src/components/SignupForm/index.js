@@ -35,7 +35,7 @@ export default function SignupForm () {
 
         setDiffentPassword(false);
 
-        signupAction(history, username, name, password);
+        signupAction(username, name, password);
     }
 
     function resetForm() {

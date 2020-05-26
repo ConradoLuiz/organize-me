@@ -100,6 +100,7 @@ export const GlobalProvider = ({ children }) => {
             const user = {
                 username: response.data.username,
                 id: response.data.id,
+                name,
                 token: response.data.token
             }
 
