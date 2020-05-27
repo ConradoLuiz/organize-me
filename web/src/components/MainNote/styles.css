@@ -30,12 +30,26 @@
     font-size: 0.9em;
 }
 
+.main-note .main-note-header .actions-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 150px;
+}
+
 .main-note .main-note-header .more-menu{
-    margin: 20px 10px 0 0;
+    /* margin: 20px 10px 0 0; */
     transition: filter 0.2s;
 }
 .main-note .main-note-header .more-menu:hover{
-    filter: drop-shadow(2px 4px 6px black);
+    filter: drop-shadow(2px 4px 6px rgb(63, 63, 63));
+}
+.main-note .main-note-header .save-btn{
+    /* margin: 20px 10px 0 0; */
+    transition: filter 0.2s;
+}
+.main-note .main-note-header .save-btn:hover{
+    filter: drop-shadow(2px 4px 6px rgb(206, 206, 206));
 }
 
 .main-editor-wrapper{

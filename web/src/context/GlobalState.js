@@ -12,6 +12,7 @@ const initialState = {
     isSigningUp: false,
     signupError: null,
     notes: [],
+    hasSavedNote: false,
     isModalOpen: false,
     isCreatingNote: false,
     isLoadingNotes: false,
@@ -229,6 +230,10 @@ export const GlobalProvider = ({ children }) => {
         });
     }
 
+    function resetSavedStatus() {
+        dispatch({type: 'RESET_SAVED_STATUS'});
+    }
+
     async function saveNoteChangeState(note, editorState) {
         const text_content = draftToText(editorState);
         
@@ -247,11 +252,11 @@ export const GlobalProvider = ({ children }) => {
 
             await api.post('notes/save', newNote, config);
             dispatch({
-                type: 'UPDATE_NOTE',
+                type: 'SET_MAIN_NOTE',
                 payload: newNote
             });
             dispatch({
-                type: 'SET_MAIN_NOTE',
+                type: 'UPDATE_NOTE',
                 payload: newNote
             });
 
@@ -295,11 +300,20 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
+    function saveMainNoteStatus() {
+        dispatch({type: 'SET_MAIN_NOTE_STATUS'});
+        // saveNoteChangeState(note, editorState);
+
+    }
+
     return (
         <GlobalContext.Provider value={{
             dispatch,
             resetCachedState,
             notes: state.notes,
+            hasSavedNote: state.hasSavedNote,
+            resetSavedStatus,
+            saveMainNoteStatus,
             user: state.user,
             setUser,
             checkLoginStatus,
@@ -321,6 +335,7 @@ export const GlobalProvider = ({ children }) => {
             deleteNoteAction,
             mainNote: state.mainNote,
             setMainNote,
+            saveNoteChangeState,
             saveNote
         }}>
             {children}

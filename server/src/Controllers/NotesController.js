@@ -10,7 +10,7 @@ module.exports = {
         
         try {
             // 
-            const snapshot = await db.collection('users').doc(id).collection('notes').get();
+            const snapshot = await db.collection('users').doc(id).collection('notes').orderBy('updated_at', 'desc').get();
             const notes = [];
             
             snapshot.forEach(doc => notes.push( { id: doc.id, ...doc.data() } ));

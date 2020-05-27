@@ -6,11 +6,14 @@ import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import Moment from 'moment';
 import 'moment/locale/pt-br';
 
-import { FiMoreVertical, FiPenTool } from 'react-icons/fi';
+import { FiMoreVertical, FiPenTool, FiSave, FiCheck, FiX } from 'react-icons/fi';
 
 import styles from './styles.css';
 
@@ -26,7 +29,7 @@ export default function MainNote() {
 
     const [menuAchor, setMenuAchor] = useState(null);
 
-    const { openCreateNote, mainNote, saveNote, saveNoteChangeState, logoutAction } = useContext(GlobalContext);
+    const { dispatch, openCreateNote, mainNote, saveNote, saveNoteChangeState, logoutAction, hasSavedNote, resetSavedStatus, saveMainNoteStatus } = useContext(GlobalContext);
     
     
     useEffect( () => {
@@ -34,7 +37,11 @@ export default function MainNote() {
             return
         }
 
-        if (editedMainNote){
+        // if(editedMainNote && (editedMainNote.id == mainNote.id)){
+        //     return
+        // }
+
+        if (editedMainNote && editedMainNote.id != mainNote.id){
             saveNote(editedMainNote, convertToRaw( editorState.getCurrentContent() ));
         }
 
@@ -44,7 +51,7 @@ export default function MainNote() {
         
         setCreatedDate(created_at_date);
         setUpdatedDate(updated_at_date);
-        let newEditorState
+        let newEditorState;
         try {
             
             newEditorState = EditorState.createWithContent( convertFromRaw( JSON.parse(mainNote.content) ) );
@@ -57,11 +64,25 @@ export default function MainNote() {
 
     }, [mainNote]);
 
+    function handleSave() {
+        saveNoteChangeState(mainNote, convertToRaw( editorState.getCurrentContent() ));
+    }
+
+    function handleNoteStatus() {
+        setEditedMainNote({
+            ...editedMainNote,
+            is_completed: !editedMainNote.is_completed
+        });
+        
+        saveMainNoteStatus();
+        
+    }
+
     function handleMenuClose(e) {
         const id = e.currentTarget.id;
         switch (id) {
             case 'save-note-btn':
-                saveNoteChangeState(mainNote, convertToRaw( editorState.getCurrentContent() ));
+                handleSave();
                 break;
             case 'logout-btn':
                 logoutAction();
@@ -75,13 +96,24 @@ export default function MainNote() {
         <div className={mainNote? 'main-note': 'main-note' + ' flex-column'}>
 
             {(mainNote) ? 
-            <>
+            <>  
                 <div className="main-note-header">
                     <div className="text-wrapper">
                         <h2>{mainNote.title}</h2>
                         <span>Criada em {createdDate}, atualizada em { updatedDate }</span>
                     </div>
-                    <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)}/>
+                    <div className="actions-wrapper">
+                        {/* {mainNote.is_completed ? <FiX size={24} className='more-menu' onClick={handleNoteStatus} /> : <FiCheck size={24} className='more-menu' onClick={handleNoteStatus} />} */}
+                        <Switch
+                            checked={mainNote.is_completed}
+                            onChange={handleNoteStatus}
+                            color="primary"
+                            name="checkedB"
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                        />
+                        <FiSave size={24} className='save-btn' onClick={handleSave} />
+                        <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)}/>
+                    </div>
                 </div>
                 
                 <Editor
@@ -93,6 +125,17 @@ export default function MainNote() {
                 onEditorStateChange={e => setEditorState(e)}
                 
                 /> 
+
+                <Snackbar 
+                open={hasSavedNote}  
+                autoHideDuration={3000} 
+                onClose={resetSavedStatus}
+                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                >
+                    <Alert  severity="success">
+                        Nota salva com sucesso
+                    </Alert>
+                </Snackbar>
             </>:
             <div className="create-note">
                 <h2>Crie uma nota para começar</h2>

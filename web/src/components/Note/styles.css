@@ -11,6 +11,9 @@
 
     border: Solid 1px #370588;
 }
+.note:hover{
+    cursor: pointer;
+}
 
 .note .note-title, .note-description,.note-created{
     /* padding: 0 10px; */
@@ -51,4 +54,7 @@
 }
 .note .buttons .note-complete:hover{
     background: #8BEFAD;
+}
+.note .buttons .note-completed:hover{
+    background: rgb(240, 190, 99) !important;
 }

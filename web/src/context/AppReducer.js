@@ -120,6 +120,7 @@ export default (state, action) => {
         case 'UPDATE_NOTE':
             return {
                 ...state,
+                hasSavedNote: true,
                 notes: [ action.payload , ...state.notes.filter(note => note.id != action.payload.id) ]
             }
 
@@ -127,6 +128,21 @@ export default (state, action) => {
             return {
                 ...state,
                 notes: [ ...state.notes.map(note => (note.id == action.payload.id) ? action.payload : note) ]
+            }
+
+        case 'RESET_SAVED_STATUS':
+            return {
+                ...state,
+                hasSavedNote: false
+            }
+
+        case 'SET_MAIN_NOTE_STATUS':
+            return {
+                ...state,
+                mainNote: {
+                    ...state.mainNote,
+                    is_completed: !state.mainNote.is_completed
+                }
             }
         default:
             return state;

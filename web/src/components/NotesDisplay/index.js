@@ -41,6 +41,7 @@ export default function NotesDisplay() {
                             key={note.id} 
                             id={note.id}
                             title={note.title} 
+                            is_completed={note.is_completed}
                             content={note.content} 
                             text_content={note.text_content}
                             created_at={note.created_at} 

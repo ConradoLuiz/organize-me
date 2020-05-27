@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import Moment from 'moment';
 import 'moment/locale/pt-br';
-import { FiTrash, FiCheck } from 'react-icons/fi';
+import { FiTrash, FiCheck, FiX } from 'react-icons/fi';
 import styles from './styles.css';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-export default function Note({ id, title, content, text_content, created_at, updated_at, object: noteObject}) {
+export default function Note({ id, title, is_completed, content, text_content, created_at, updated_at, object: noteObject}) {
     
     const { deleteNoteAction, setMainNote } = useContext(GlobalContext);
 
@@ -40,8 +40,8 @@ export default function Note({ id, title, content, text_content, created_at, upd
                 <button className='note-delete' onClick={e => handleDelete(e)}>
                     <FiTrash size={18} />
                 </button>
-                <button className='note-complete'>
-                    <FiCheck size={18} />
+                <button className={is_completed ? 'note-completed ' + 'note-complete' : 'note-complete'}>
+                    {is_completed ? <FiX size={18} /> : <FiCheck size={18} />}
                 </button>
             </div>
         </div>
