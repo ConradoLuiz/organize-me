@@ -144,6 +144,11 @@ export default (state, action) => {
                     is_completed: !state.mainNote.is_completed
                 }
             }
+        case 'UPDATE_NOTE_STATUS':
+            return {
+                ...state,
+                notes: [...state.notes.map(note => (note.id == action.payload.id) ? {...note, is_completed: action.payload.is_completed} : note)]
+            }
         default:
             return state;
     }

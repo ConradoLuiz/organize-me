@@ -16,6 +16,7 @@ router.use(AuthController.checkToken);
 
 router.get('/notes', AuthController.isLoggedIn , NotesController.index);
 router.post('/notes/save', AuthController.isLoggedIn , NotesController.save);
+router.post('/notes/save/status', AuthController.isLoggedIn , NotesController.saveStatus);
 router.post('/notes/new', AuthController.isLoggedIn , NotesController.create);
 router.delete('/notes', AuthController.isLoggedIn , NotesController.delete);
 

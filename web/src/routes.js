@@ -19,6 +19,10 @@ function PrivateRoute({component: RouteComponent, ...rest}) {
             try {
                 const response = await api.get(`auth/verify/${token}`);
                 setUser(response.data.user);
+                dispatch({
+                    type: 'LOGIN',
+                    payload: response.data.user
+                });
             } catch (error) {
                 dispatch({ type: 'FAILED_LOGIN' });
             }

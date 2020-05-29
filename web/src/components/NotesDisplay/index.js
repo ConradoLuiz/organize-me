@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 // import NotesList from '../NotesList';
 import logo from '../../assets/logo.svg';
 import styles from './styles.css';
@@ -12,7 +12,7 @@ import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
     const { openCreateNote, notes, setMainNote, user } = useContext(GlobalContext);
-    
+
     
     return (
         <div className='notes-display'>
@@ -34,8 +34,7 @@ export default function NotesDisplay() {
 
             <div className="notes-container">
                 { notes.map((note) =>{
-                    
-                    
+
                     return (
                         <Note 
                             key={note.id} 

@@ -177,6 +177,7 @@ export const GlobalProvider = ({ children }) => {
             }
             const response = await api.get('notes/', config);
             
+            
             dispatch({
                 type: 'LOADED_NOTES',
                 payload: response.data.notes
@@ -184,7 +185,7 @@ export const GlobalProvider = ({ children }) => {
             
         } catch (error) {
 
-            if(error.response.status == 401){
+            if(error.response && error.response.status == 401){
                 dispatch({type: 'FAILED_LOGIN'});
             }
             
@@ -218,6 +219,36 @@ export const GlobalProvider = ({ children }) => {
             }
             
             
+        }
+    }
+
+    async function completeNoteAction(id, status) {
+
+      
+        try{
+            const body = {
+                id,
+                is_completed: status
+            };
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('JWT')}`
+                }
+            }
+            
+            const response = await api.post('notes/save/status', body, config);
+            
+            dispatch({
+                type: 'UPDATE_NOTE_STATUS',
+                payload: {...response.data.updatedNote, id}
+            });
+        } catch(error){
+
+            if(error.response.status == 401){
+                dispatch({type: 'FAILED_LOGIN'});
+            }
+
         }
     }
 
@@ -314,6 +345,7 @@ export const GlobalProvider = ({ children }) => {
             hasSavedNote: state.hasSavedNote,
             resetSavedStatus,
             saveMainNoteStatus,
+            completeNoteAction,
             user: state.user,
             setUser,
             checkLoginStatus,

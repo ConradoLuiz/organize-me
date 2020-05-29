@@ -11,6 +11,7 @@ module.exports = {
         try {
             // 
             const snapshot = await db.collection('users').doc(id).collection('notes').orderBy('updated_at', 'desc').get();
+            // const snapshot = await db.collection('users').doc(id).collection('notes').get();
             const notes = [];
             
             snapshot.forEach(doc => notes.push( { id: doc.id, ...doc.data() } ));
@@ -81,7 +82,38 @@ module.exports = {
 
             res.status(200);
             return res.json({
-                status: 'Updated'
+                status: 'Updated',
+                updatedNote
+            });
+
+        } catch(error){
+            console.log('update note try catch error', error);
+            
+            const err = new Error("Connection error. Try again later.");
+            res.status(503);
+            return next(err);
+        }
+
+        
+    },
+    async saveStatus(req, res, next){
+        const { id, is_completed } = req.body;
+        const user = req.user;
+
+        try{
+
+            const updatedNote = {
+                is_completed,
+                updated_at: admin.firestore.Timestamp.fromDate(new Date())
+            }
+            
+            db.collection('users').doc(user.id).collection('notes').doc(id).set(updatedNote, {merge: true});
+
+            res.status(200);
+            return res.json({
+                status: 'Updated',
+                updatedNote
+
             });
 
         } catch(error){
