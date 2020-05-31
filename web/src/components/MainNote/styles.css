@@ -73,6 +73,10 @@
     overflow: auto;
 }
 
+.main-editor *{
+    font-weight: unset;
+}
+
 .create-note{
     text-align: center; 
 }

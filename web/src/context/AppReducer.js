@@ -136,7 +136,7 @@ export default (state, action) => {
                 hasSavedNote: false
             }
 
-        case 'SET_MAIN_NOTE_STATUS':
+        case 'TOGGLE_MAIN_NOTE_STATUS':
             return {
                 ...state,
                 mainNote: {
@@ -144,6 +144,16 @@ export default (state, action) => {
                     is_completed: !state.mainNote.is_completed
                 }
             }
+            
+        case 'SET_MAIN_NOTE_STATUS':
+            return {
+                ...state,
+                mainNote: {
+                    ...state.mainNote,
+                    is_completed: (action.payload.id == state.mainNote.id) ? action.payload.is_completed : state.mainNote.is_completed
+                }
+            }
+
         case 'UPDATE_NOTE_STATUS':
             return {
                 ...state,

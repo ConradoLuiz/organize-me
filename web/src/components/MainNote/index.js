@@ -29,7 +29,7 @@ export default function MainNote() {
 
     const [menuAchor, setMenuAchor] = useState(null);
 
-    const { dispatch, openCreateNote, mainNote, saveNote, saveNoteChangeState, logoutAction, hasSavedNote, resetSavedStatus, saveMainNoteStatus } = useContext(GlobalContext);
+    const { dispatch, openCreateNote, mainNote, saveNote, saveNoteChangeState, logoutAction, hasSavedNote, resetSavedStatus, saveMainNoteStatus, completeNoteAction } = useContext(GlobalContext);
     
     
     useEffect( () => {
@@ -74,7 +74,7 @@ export default function MainNote() {
             is_completed: !editedMainNote.is_completed
         });
         
-        saveMainNoteStatus();
+        completeNoteAction(mainNote.id, !mainNote.is_completed);
         
     }
 

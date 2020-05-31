@@ -243,6 +243,10 @@ export const GlobalProvider = ({ children }) => {
                 type: 'UPDATE_NOTE_STATUS',
                 payload: {...response.data.updatedNote, id}
             });
+            dispatch({
+                type: 'SET_MAIN_NOTE_STATUS',
+                payload: {...response.data.updatedNote, id}
+            });
         } catch(error){
 
             if(error.response.status == 401){
@@ -281,14 +285,20 @@ export const GlobalProvider = ({ children }) => {
                 }
             }
 
-            await api.post('notes/save', newNote, config);
+            const response = await api.post('notes/save', newNote, config);
             dispatch({
                 type: 'SET_MAIN_NOTE',
-                payload: newNote
+                payload: {
+                    ...newNote,
+                    updated_at: response.data.updatedNote.updated_at
+                }
             });
             dispatch({
                 type: 'UPDATE_NOTE',
-                payload: newNote
+                payload: {
+                    ...newNote,
+                    updated_at: response.data.updatedNote.updated_at
+                }
             });
 
         } catch (error) {
@@ -332,7 +342,7 @@ export const GlobalProvider = ({ children }) => {
     }
 
     function saveMainNoteStatus() {
-        dispatch({type: 'SET_MAIN_NOTE_STATUS'});
+        dispatch({type: 'TOGGLE_MAIN_NOTE_STATUS'});
         // saveNoteChangeState(note, editorState);
 
     }

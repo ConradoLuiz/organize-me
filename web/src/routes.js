@@ -11,7 +11,7 @@ import { GlobalContext } from './context/GlobalState';
 import { useEffect } from 'react';
 
 function PrivateRoute({component: RouteComponent, ...rest}) {   
-    const { isLoggedIn, dispatch, setUser } = useContext(GlobalContext);
+    const { isLoggedIn, dispatch, setUser, resetCachedState } = useContext(GlobalContext);
 
     useEffect(() => {
         const token = localStorage.getItem('JWT');
@@ -24,7 +24,8 @@ function PrivateRoute({component: RouteComponent, ...rest}) {
                     payload: response.data.user
                 });
             } catch (error) {
-                dispatch({ type: 'FAILED_LOGIN' });
+                // dispatch({ type: 'FAILED_LOGIN' });
+                resetCachedState();
             }
         }
 
