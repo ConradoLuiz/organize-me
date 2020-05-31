@@ -207,6 +207,7 @@ export const GlobalProvider = ({ children }) => {
                 type: 'DELETE_NOTE',
                 payload: id
             });
+            
 
         } catch (error) {
             

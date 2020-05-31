@@ -109,7 +109,8 @@ export default (state, action) => {
         case 'DELETE_NOTE':
             return{
                 ...state,
-                notes: state.notes.filter(note => note.id != action.payload)
+                notes: state.notes.filter(note => note.id != action.payload),
+                mainNote: (state.mainNote.id == action.payload) ? null : state.mainNote
             }
         case 'SET_MAIN_NOTE':
             return{
