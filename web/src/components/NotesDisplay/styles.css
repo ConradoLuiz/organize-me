@@ -26,6 +26,12 @@
     align-items: center;
     justify-content: center;
 }
+.notes-display .header-top-small{
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .notes-display .header-top img{
     width: 50px;

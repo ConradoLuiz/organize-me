@@ -37,7 +37,7 @@ export default function NotesDisplay() {
     return (
         <div className='notes-display'>
             <header>
-                <div className="header-top">
+                <div className={isDesktop ? "header-top": 'header-top ' + 'header-top-small'}>
                     <img src={logo} alt="Logo"/>
                     <h1>Organize-me</h1>
                 </div>
