@@ -2,6 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import Moment from 'moment';
 import 'moment/locale/pt-br';
 import { FiTrash, FiCheck, FiX } from 'react-icons/fi';
+
+import { useDesktop } from '../../utils/mediaQueries';
+import { useHistory } from 'react-router-dom';
+
 import styles from './styles.css';
 
 import { GlobalContext } from '../../context/GlobalState';
@@ -13,7 +17,8 @@ export default function Note({ id, title, is_completed, content, text_content, c
 
     const { deleteNoteAction, setMainNote, completeNoteAction } = useContext(GlobalContext);
 
-
+    const isDesktop = useDesktop();
+    const history = useHistory();
 
     function handleDelete(e) {
         e.stopPropagation();
@@ -30,6 +35,10 @@ export default function Note({ id, title, is_completed, content, text_content, c
     function handleClick(e) {
         
         setMainNote(noteObject);
+
+        if(!isDesktop){
+            history.push('/notes/edit');
+        }
     }
 
     useEffect( () => {
@@ -63,5 +72,6 @@ export default function Note({ id, title, is_completed, content, text_content, c
                 </button>
             </div>
         </div>
+        
     )
 }

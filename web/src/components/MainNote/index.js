@@ -1,5 +1,5 @@
 import React, { ReactFragment, useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import * as draft from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -14,9 +14,10 @@ import Alert from '@material-ui/lab/Alert';
 import Moment from 'moment';
 import 'moment/locale/pt-br';
 
-import { FiMoreVertical, FiPenTool, FiSave, FiCheck, FiX } from 'react-icons/fi';
+import { FiMoreVertical, FiPenTool, FiSave, FiCheck, FiX, FiArrowLeft } from 'react-icons/fi';
 
 import styles from './styles.css';
+import { useDesktop } from '../../utils/mediaQueries';
 
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -32,7 +33,10 @@ export default function MainNote() {
 
     const { dispatch, openCreateNote, mainNote, saveNote, saveNoteChangeState, logoutAction, hasSavedNote, resetSavedStatus, saveMainNoteStatus, completeNoteAction } = useContext(GlobalContext);
     
-    
+    const history = useHistory();
+    const isDesktop = useDesktop();
+    const routeParams = useParams();
+
     useEffect( () => {
         if(!mainNote){
             return
@@ -65,8 +69,14 @@ export default function MainNote() {
 
     }, [mainNote]);
 
-    function handleSave() {
-        saveNoteChangeState(mainNote, convertToRaw( editorState.getCurrentContent() ));
+    useEffect(() => {
+        if(isDesktop){
+            history.push('/notes');
+        }
+    }, [isDesktop]);
+
+    async function handleSave() {
+        await saveNoteChangeState(mainNote, convertToRaw( editorState.getCurrentContent() ));
     }
 
     function handleNoteStatus() {
@@ -93,12 +103,19 @@ export default function MainNote() {
         }
         setMenuAchor(null);
     }
+
+    async function handleGoBack() {
+        await handleSave();
+        history.push('/notes');
+    }
+
     return (
         <div className={mainNote? 'main-note': 'main-note' + ' flex-column'}>
 
             {(mainNote) ? 
             <>  
-                <div className="main-note-header">
+                <div className={isDesktop ? "main-note-header" : 'main-note-header-small'}>
+                    {!isDesktop && <FiArrowLeft className='back-button' size={24} onClick={handleGoBack}/>}
                     <div className="text-wrapper">
                         <h2>{mainNote.title}</h2>
                         <span>Criada em {createdDate}, atualizada em { updatedDate }</span>
@@ -134,7 +151,7 @@ export default function MainNote() {
                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                 >
                     <Alert  severity="success">
-                        Nota salva com sucesso
+                        {`Nota "${mainNote.title}" salva com sucesso`}
                     </Alert>
                 </Snackbar>
             </>:

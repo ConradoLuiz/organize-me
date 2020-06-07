@@ -1,19 +1,39 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // import NotesList from '../NotesList';
 import logo from '../../assets/logo.svg';
 import styles from './styles.css';
 
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiPlusCircle, FiMoreVertical } from 'react-icons/fi';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import CreateNoteModal from '../CreateNoteModal';
 import Note from '../Note';
 
+import { useDesktop } from '../../utils/mediaQueries';
+
 import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
-    const { openCreateNote, notes, setMainNote, user } = useContext(GlobalContext);
-
+    const { openCreateNote, notes, setMainNote, user, logoutAction } = useContext(GlobalContext);
     
+    const isDesktop = useDesktop();
+    
+    const [menuAchor, setMenuAchor] = useState(null);
+    
+    function handleMenuClose(e) {
+        const id = e.currentTarget.id;
+        switch (id) {
+            case 'logout-btn':
+                logoutAction();
+                break
+            default:
+                break;
+        }
+        setMenuAchor(null);
+    }
+
     return (
         <div className='notes-display'>
             <header>
@@ -22,7 +42,10 @@ export default function NotesDisplay() {
                     <h1>Organize-me</h1>
                 </div>
 
-                <h2>Olá, { user.name.split(' ')[0] }</h2>
+                <div className={!isDesktop && "header-bottom"}>
+                    <h2>Olá, { user.name.split(' ')[0] }</h2>
+                    {!isDesktop && <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)}/>}
+                </div>
             </header>
 
             
@@ -53,7 +76,16 @@ export default function NotesDisplay() {
 
             </div>
 
-
+            <Menu
+                id="more-menu"
+                anchorEl={menuAchor}
+                keepMounted
+                open={Boolean(menuAchor)}
+                onClose={handleMenuClose}
+            >
+                
+                <MenuItem id='logout-btn' onClick={e => handleMenuClose(e)}>Sair</MenuItem>
+            </Menu>
         </div>
     )
 }

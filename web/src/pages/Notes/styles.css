@@ -11,10 +11,15 @@
 
 .main-content{
     background-color: #fff;
-    border-radius: 2em;
+    width: 100%;
 }
 
+.main-content-small{
+    height: 100%;
+}
 .main-content-desktop{
+    border-radius: 2em;
+
     height: 80%;
     display: grid;
     grid-template-columns: 30% 70%;

@@ -1,5 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { useDesktop } from '../../utils/mediaQueries';
+
 import NotesDisplay from '../../components/NotesDisplay';
 import MainNote from '../../components/MainNote';
 import CreateNoteModal from '../../components/CreateNoteModal';
@@ -11,7 +14,7 @@ import { GlobalContext } from '../../context/GlobalState';
 
 
 export default function Notes() {
-    const [isDesktop, setIsDesktop] = useState(true);
+    const isDesktop =  useDesktop();
 
     const history = useHistory();
 
@@ -24,10 +27,10 @@ export default function Notes() {
     return (
         <div className='notes-page'>
 
-            <div className={(isDesktop)? 'main-content main-content-desktop' : 'main-content'}>
+            <div className={(isDesktop)? 'main-content main-content-desktop' : 'main-content main-content-small'}>
                 <NotesDisplay className='notes-selection'/>
 
-                <MainNote className='main-note'/>
+                {isDesktop && <MainNote className='main-note'/>}
             </div>
             
             {/* MODAL TO CREATE NEW NOTE */}

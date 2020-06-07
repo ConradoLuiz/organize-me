@@ -35,7 +35,7 @@ export default function CreateNoteModal() {
   const classes = useStyles();
   
   const [title, setTitle] = useState('');
-  const [titleError, setTitleError] = useState(false)
+  const [titleError, setTitleError] = useState(false);
 
   const { isModalOpen, openCreateNote, closeCreateNote, createNoteAction, isCreatingNote } = useContext(GlobalContext);
 

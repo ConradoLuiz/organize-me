@@ -23,6 +23,36 @@
     justify-content: space-between;
     
 }
+
+.main-note .main-note-header-small{
+    margin: 16px 20px 10px;
+
+    display: grid;
+    grid-template-areas: 
+                        'back-button actions'
+                        'description description';
+}
+.main-note .main-note-header-small .actions-wrapper{
+    grid-area: actions;
+    justify-self: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.main-note .main-note-header-small .actions-wrapper > * {
+    margin: 0 0 0 10px;
+}
+
+.main-note .main-note-header-small .text-wrapper{
+    grid-area: description;
+}
+
+.main-note .main-note-header-small .back-button{
+    grid-area: back-button;
+    margin: 5px 0 0 0;
+}
+
 .main-note .main-note-header h2{
     font-size: 2em;
 }

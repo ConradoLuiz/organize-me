@@ -53,9 +53,9 @@ export default function Router() {
         <BrowserRouter>
             <Switch>
                 <Route path='/' exact component={Login}/>
-                <Route path='/signup' component={Signup}/>
-                <PrivateRoute path='/notes' component={Notes} />
-                <PrivateRoute path='/notes/:id' component={MainNote} />
+                <Route path='/signup' exact component={Signup}/>
+                <PrivateRoute path='/notes' exact component={Notes} />
+                <PrivateRoute path='/notes/edit' exact component={MainNote} />
                 <Redirect to='/'/>
             </Switch>
         </BrowserRouter>

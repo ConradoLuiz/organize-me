@@ -39,6 +39,12 @@
     text-transform: capitalize;
 }
 
+.notes-display .header-bottom{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 10px 0;
+}
+
 .notes-display .add-note{
     padding: 5px 10px;
     display: flex;
