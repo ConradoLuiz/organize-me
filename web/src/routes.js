@@ -6,6 +6,7 @@ import api from './services/api';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Notes from './pages/Notes';
+import MainNote from './components/MainNote';
 
 import { GlobalContext } from './context/GlobalState';
 import { useEffect } from 'react';
@@ -54,6 +55,7 @@ export default function Router() {
                 <Route path='/' exact component={Login}/>
                 <Route path='/signup' component={Signup}/>
                 <PrivateRoute path='/notes' component={Notes} />
+                <PrivateRoute path='/notes/:id' component={MainNote} />
                 <Redirect to='/'/>
             </Switch>
         </BrowserRouter>

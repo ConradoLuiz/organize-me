@@ -110,7 +110,7 @@ export default (state, action) => {
             return{
                 ...state,
                 notes: state.notes.filter(note => note.id != action.payload),
-                mainNote: (state.mainNote.id == action.payload) ? null : state.mainNote
+                mainNote: (state?.mainNote?.id == action.payload) ? null : ( state.mainNote || null )
             }
         case 'SET_MAIN_NOTE':
             return{
