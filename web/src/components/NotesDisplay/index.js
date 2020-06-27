@@ -12,21 +12,28 @@ import CreateNoteModal from '../CreateNoteModal';
 import Note from '../Note';
 
 import { useDesktop } from '../../utils/mediaQueries';
+import useTheme from '../../utils/theme';
 
 import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
     const { openCreateNote, notes, setMainNote, user, logoutAction } = useContext(GlobalContext);
-    
+
     const isDesktop = useDesktop();
-    
+    const [theme, setTheme] = useTheme();
+
     const [menuAchor, setMenuAchor] = useState(null);
-    
+
     function handleMenuClose(e) {
         const id = e.currentTarget.id;
         switch (id) {
             case 'logout-btn':
                 logoutAction();
+                break
+            case 'change-theme':
+                setTheme(
+                    (localStorage.getItem('theme') == 'dark-theme' ? 'light-theme' : 'dark-theme')
+                );
                 break
             default:
                 break;
@@ -37,18 +44,18 @@ export default function NotesDisplay() {
     return (
         <div className='notes-display'>
             <header>
-                <div className={isDesktop ? "header-top": 'header-top ' + 'header-top-small'}>
-                    <img src={logo} alt="Logo"/>
+                <div className={isDesktop ? "header-top" : 'header-top ' + 'header-top-small'}>
+                    <img src={logo} alt="Logo" />
                     <h1>Organize-me</h1>
                 </div>
 
                 <div className={!isDesktop && "header-bottom"}>
-                    <h2>Olá, { user.name.split(' ')[0] }</h2>
-                    {!isDesktop && <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)}/>}
+                    <h2>Olá, {user.name.split(' ')[0]}</h2>
+                    {!isDesktop && <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)} />}
                 </div>
             </header>
 
-            
+
             <div className="add-note">
                 <p>Selecione uma nota ou crie uma nova</p>
 
@@ -56,18 +63,18 @@ export default function NotesDisplay() {
             </div>
 
             <div className="notes-container">
-                { notes.map((note) =>{
+                {notes.map((note) => {
 
                     return (
-                        <Note 
-                            key={note.id} 
+                        <Note
+                            key={note.id}
                             id={note.id}
-                            title={note.title} 
+                            title={note.title}
                             is_completed={note.is_completed}
-                            content={note.content} 
+                            content={note.content}
                             text_content={note.text_content}
-                            created_at={note.created_at} 
-                            updated_at={note.updated_at} 
+                            created_at={note.created_at}
+                            updated_at={note.updated_at}
 
                             object={note}
                         />
@@ -83,7 +90,8 @@ export default function NotesDisplay() {
                 open={Boolean(menuAchor)}
                 onClose={handleMenuClose}
             >
-                
+
+                <MenuItem id='change-theme' onClick={e => handleMenuClose(e)}>Mudar tema</MenuItem>
                 <MenuItem id='logout-btn' onClick={e => handleMenuClose(e)}>Sair</MenuItem>
             </Menu>
         </div>

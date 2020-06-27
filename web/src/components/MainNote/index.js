@@ -18,6 +18,7 @@ import { FiMoreVertical, FiPenTool, FiSave, FiCheck, FiX, FiArrowLeft } from 're
 
 import styles from './styles.css';
 import { useDesktop } from '../../utils/mediaQueries';
+import useTheme from '../../utils/theme';
 
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -36,6 +37,7 @@ export default function MainNote() {
     const history = useHistory();
     const isDesktop = useDesktop();
     const routeParams = useParams();
+    const [theme, setTheme] = useTheme();
 
     useEffect( () => {
         if(!mainNote){
@@ -97,6 +99,11 @@ export default function MainNote() {
                 break;
             case 'logout-btn':
                 logoutAction();
+                break
+            case 'change-theme':
+                setTheme(
+                    (localStorage.getItem('theme') == 'dark-theme'? 'light-theme' : 'dark-theme')
+                );
                 break
             default:
                 break;
@@ -171,6 +178,7 @@ export default function MainNote() {
                 onClose={handleMenuClose}
             >
                 <MenuItem id='save-note-btn' onClick={e => handleMenuClose(e)}>Salvar</MenuItem>
+                <MenuItem id='change-theme' onClick={e => handleMenuClose(e)}>Mudar tema</MenuItem>
                 <MenuItem id='logout-btn' onClick={e => handleMenuClose(e)}>Sair</MenuItem>
             </Menu>
         </div>

@@ -2,13 +2,19 @@ import React from 'react';
 import Router from './routes';
 import './global.css';
 import { GlobalProvider } from './context/GlobalState';
+import useTheme from './utils/theme';
 
 function App() {
-  return (
-    <GlobalProvider>
-      <Router/>
-    </GlobalProvider>
-  );
+
+    const [theme, setTheme] = useTheme();
+
+    return (
+        <GlobalProvider>
+            <div className={theme}>
+                <Router />
+            </div>
+        </GlobalProvider>
+    );
 }
 
 export default App;
