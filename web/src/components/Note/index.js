@@ -65,10 +65,10 @@ export default function Note({ id, title, is_completed, content, text_content, c
 
             <div className="buttons">
                 <button className='note-delete' onClick={e => handleDelete(e)}>
-                    <FiTrash size={18} />
+                    <FiTrash size={18} color='var(--accent-color)' />
                 </button>
                 <button className={is_completed ? 'note-completed ' + 'note-complete' : 'note-complete'} onClick={e => handleComplete(e)}>
-                    {is_completed ? <FiX size={18} /> : <FiCheck size={18} />}
+                    {is_completed ? <FiX size={18} color='var(--accent-color)' /> : <FiCheck size={18} color='var(--accent-color)'/>}
                 </button>
             </div>
         </div>

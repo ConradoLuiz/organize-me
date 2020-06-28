@@ -6,7 +6,7 @@
 .main-note{
     display: flex;
     flex-direction: column;
-
+    color: var(--text-color);
 }
 
 .flex-column{
@@ -72,14 +72,14 @@
     transition: filter 0.2s;
 }
 .main-note .main-note-header .more-menu:hover{
-    filter: drop-shadow(2px 4px 6px rgb(63, 63, 63));
+    filter: drop-shadow(2px 4px 6px var(--shadow-color));
 }
 .main-note .main-note-header .save-btn{
     /* margin: 20px 10px 0 0; */
     transition: filter 0.2s;
 }
 .main-note .main-note-header .save-btn:hover{
-    filter: drop-shadow(2px 4px 6px rgb(206, 206, 206));
+    filter: drop-shadow(2px 4px 6px var(--shadow-color));
 }
 
 .main-editor-wrapper{
@@ -93,11 +93,17 @@
 }
 
 .main-editor-toolbar{
-    /* position: fixed;
-    width: 54%; */
+    border-radius: 5px;
+    background-color: var(--editor-toolbar-bg-color);
+    border-color: var(--general-bg-color);
+}
+.main-editor-toolbar *{
+    
+    background-color: var(--editor-toolbar-bg-color);
+    border-color: var(--general-bg-color);
 }
 .main-editor{
-    background-color: whitesmoke;
+    background-color: var(--editor-bg-color);
     padding: 0 0 0 5px;
     margin: 0 0 0 5px;
     overflow: auto;

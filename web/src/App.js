@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import Router from './routes';
 import './global.css';
 import { GlobalProvider } from './context/GlobalState';
-import useTheme from './utils/theme';
+import { ThemeContext } from './context/themeContext';
+
 
 function App() {
 
-    const [theme, setTheme] = useTheme();
-
+    const { theme } = useContext(ThemeContext);
+    
     return (
         <GlobalProvider>
             <div className={theme}>

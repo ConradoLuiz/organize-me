@@ -136,7 +136,8 @@ export const GlobalProvider = ({ children }) => {
 
     function logoutAction() {
         resetCachedState();
-        localStorage.clear();
+        localStorage.removeItem('context');
+        localStorage.removeItem('JWT');
     }
 
     async function createNoteAction(title) {

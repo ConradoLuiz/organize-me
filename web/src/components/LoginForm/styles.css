@@ -1,9 +1,9 @@
 .form-container{
     border-radius: 2em;
-    background-color: #fff;
+    background-color: var(--general-bg-color);
     min-width: 380px;
     min-height: 400px;
-    
+    color: var(--text-color);
     padding: 1%;
 }
 
@@ -25,6 +25,8 @@
     width: 60%;
     margin: 1.7em 0 0 0;
     padding: 15px 20px;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
 }
 
 .login-form span{
@@ -36,19 +38,19 @@
 .login-form a{
     margin: 0 0 0 15%;
     align-self: start;
-
+    color: var(--text-color);
     text-decoration: none;
 }
 
 .login-form a:hover{
-    color: #000;
+    color: var(--text-color);
     text-decoration: underline;
 }
 
 .login-form .btn-login{
     border: none;
     background: #C4A2FC;
-    color: #000;
+    color: var(--text-color);
     transition: filter 0.2s;
 }
 
@@ -66,7 +68,6 @@
     .form-container{
         min-width: 300px;
         min-height: 400px;
-        
     }
     
 }

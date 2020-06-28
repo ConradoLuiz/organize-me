@@ -11,9 +11,9 @@
     padding: 5px 0 0 0;
     margin: 10px 0;
     border-radius: 10px;
-    background: #F0F7FD;
+    background: var(--note-bg);
 
-    border: Solid 1px #370588;
+    border: Solid 1px var(--accent-color);
 }
 .note:hover{
     cursor: pointer;

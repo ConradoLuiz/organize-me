@@ -2,17 +2,34 @@
 
 .light-theme{
   --general-bg-color: #fff;
+  --login-page-bg: #E8ECFC;
+  --editor-toolbar-bg-color: #fff;
+  --editor-bg-color: whitesmoke;
   --text-color: #000;
+  --accent-color: #370588;
+  --shadow-color: rgba(237,237,237,1);
+  --note-bg: #F0F7FD;
+  --input-bg-color: #fff;
 }
 
 .dark-theme{
-  --general-bg-color: rgb(39, 39, 39);
+  --general-bg-color: #313131;
+  --login-page-bg: #545454;
+  --editor-toolbar-bg-color: #4b4b4b;
+  --editor-bg-color: #19161a;
   --text-color: rgb(245, 245, 245);
+  --accent-color: #8d47ff;
+  --shadow-color: #950597;
+  --note-bg: #270f39;
+  --input-bg-color: #101010;
+
 }
 
 *{
   margin: 0;
   padding: 0;
+
+  transition: background-color 0.5s;
 }
 
 html{

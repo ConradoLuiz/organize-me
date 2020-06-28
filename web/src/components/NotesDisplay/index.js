@@ -12,15 +12,16 @@ import CreateNoteModal from '../CreateNoteModal';
 import Note from '../Note';
 
 import { useDesktop } from '../../utils/mediaQueries';
-import useTheme from '../../utils/theme';
+import { ThemeContext } from '../../context/themeContext';
 
 import { GlobalContext } from '../../context/GlobalState';
 
 export default function NotesDisplay() {
     const { openCreateNote, notes, setMainNote, user, logoutAction } = useContext(GlobalContext);
+    
+    const { setTheme } = useContext(ThemeContext);
 
     const isDesktop = useDesktop();
-    const [theme, setTheme] = useTheme();
 
     const [menuAchor, setMenuAchor] = useState(null);
 
@@ -49,7 +50,7 @@ export default function NotesDisplay() {
                     <h1>Organize-me</h1>
                 </div>
 
-                <div className={!isDesktop && "header-bottom"}>
+                <div className={!isDesktop && "header-bottom" || undefined}>
                     <h2>Olá, {user.name.split(' ')[0]}</h2>
                     {!isDesktop && <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)} />}
                 </div>
@@ -59,7 +60,7 @@ export default function NotesDisplay() {
             <div className="add-note">
                 <p>Selecione uma nota ou crie uma nova</p>
 
-                <FiPlusCircle size={24} color='#370588' onClick={openCreateNote} />
+                <FiPlusCircle size={24} color='var(--accent-color)' onClick={openCreateNote} />
             </div>
 
             <div className="notes-container">

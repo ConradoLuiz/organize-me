@@ -18,7 +18,7 @@ import { FiMoreVertical, FiPenTool, FiSave, FiCheck, FiX, FiArrowLeft } from 're
 
 import styles from './styles.css';
 import { useDesktop } from '../../utils/mediaQueries';
-import useTheme from '../../utils/theme';
+import { ThemeContext } from '../../context/themeContext';
 
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -37,7 +37,7 @@ export default function MainNote() {
     const history = useHistory();
     const isDesktop = useDesktop();
     const routeParams = useParams();
-    const [theme, setTheme] = useTheme();
+    const { setTheme } = useContext(ThemeContext);
 
     useEffect( () => {
         if(!mainNote){
@@ -135,9 +135,14 @@ export default function MainNote() {
                             color="primary"
                             name="checkedB"
                             inputProps={{ 'aria-label': 'primary checkbox' }}
+                        /> 
+                        <FiSave size={24} className='save-btn' color='var(--accent-color)' onClick={handleSave} />
+                        <FiMoreVertical 
+                            className='more-menu' 
+                            color='var(--accent-color)' 
+                            size={24} onClick={e => 
+                            setMenuAchor(e.currentTarget)}
                         />
-                        <FiSave size={24} className='save-btn' onClick={handleSave} />
-                        <FiMoreVertical className='more-menu' size={24} onClick={e => setMenuAchor(e.currentTarget)}/>
                     </div>
                 </div>
                 

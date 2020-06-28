@@ -3,7 +3,7 @@
 }
 
 .login-page{
-    background: #E8ECFC;
+    background: var(--login-page-bg);
 
     width: 100%;
     min-height: 100vh;
