@@ -7,7 +7,6 @@
     display: flex;
     flex-direction: column;
     color: var(--text-color);
-    background-color: var(--general-bg-color);
 }
 
 .flex-column{
@@ -84,7 +83,7 @@
 }
 
 .main-editor-wrapper{
-    margin: 0px 0 0 5px;
+    margin: 0px;
     overflow: auto;
     height: 100%;
     display: flex;
@@ -95,6 +94,7 @@
 
 .main-editor-toolbar{
     border-radius: 5px;
+    margin-bottom: 0;
     background-color: var(--editor-toolbar-bg-color);
     border-color: var(--general-bg-color);
 }
@@ -105,8 +105,8 @@
 }
 .main-editor{
     background-color: var(--editor-bg-color);
-    padding: 0 0 0 5px;
-    margin: 0 0 0 5px;
+    padding: 0 0 0 8px;
+    margin: 0;
     overflow: auto;
 }
 
@@ -129,4 +129,10 @@
     width: 120px;
     height: 50px;
     text-align: center;
+}
+
+@media (max-width: 900px){
+    .main-note {
+        background-color: var(--general-bg-color);
+    }
 }
