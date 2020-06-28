@@ -134,5 +134,12 @@
 @media (max-width: 900px){
     .main-note {
         background-color: var(--general-bg-color);
+        min-height: 100vh;
+    }
+    .main-editor-wrapper{
+        border-radius: 0;
+    }
+    .main-editor{
+        min-height: 60vh;
     }
 }
