@@ -1,7 +1,7 @@
 # Organize-me
 ### **Create, edit and save rich notes on the web, in the cloud.**
 
-## [Organize-me.now.sh](organize-me.now.sh)
+## [Organize-me.now.sh](https://organize-me.now.sh/)
 
 Organize-me is a web application that let's users create rich text notes on the web. The notes are saved in the cloud and can be accessed on any device with an internet connection and a browser.
 
